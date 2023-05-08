@@ -1,0 +1,1 @@
+package com.example.test.Services;import com.example.test.Request.CommentRequest;public interface CommentService {    CommentRequest commentPost(CommentRequest commentRequest,Long id,String email);}

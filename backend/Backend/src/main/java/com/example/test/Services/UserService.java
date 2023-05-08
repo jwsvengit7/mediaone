@@ -1,0 +1,1 @@
+package com.example.test.Services;import com.example.test.Request.RegisterRequest;import com.example.test.Request.UserRequest;import com.example.test.Response.Response;public interface UserService {    Response authenticate(UserRequest request);    Response register(RegisterRequest request);}

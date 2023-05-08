@@ -1,0 +1,1 @@
+package com.example.test.Services;import com.example.test.Request.LikeRequest;public interface LikeService {    LikeRequest likes(Long id, LikeRequest likeRequestDto, String email);}

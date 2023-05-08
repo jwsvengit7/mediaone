@@ -1,18 +1,24 @@
-import React, { useState } from "react";
-//import $ from 'jquery';
+import React, { useState,useEffect } from "react";
+import axios from 'axios'; // Import axios
 import './css/jwsvenStyle.css';
-import {Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUser,faEnvelope,faLock, faLockOpen, faUserAlt} from '@fortawesome/free-solid-svg-icons';
+import { Link,useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faLock, faLockOpen, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import './css/style.css';
 import swal from 'sweetalert';
 
-
 interface RegistrationFormProps {
-    onRegisterMode: () => void;
-  }
+  onRegisterMode: () => void,
+ 
+}
 
-  const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
+const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
+    const navigate = useNavigate(); 
+    useEffect(()=>{
+        if(localStorage.getItem("token")){
+            navigate("/dashboard")
+        }
+    },[])
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,36 +27,45 @@ interface RegistrationFormProps {
   const [registrationError, setRegistrationError] = useState("");
 
   const handleFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();      
-    if (username.length<5) {
-        swal('ALERT','Name is required','error');
+    event.preventDefault();
+    if (username.length < 3) {
+      swal('ALERT', 'Name is required', 'error');
     }
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        swal('ALERT','Invalid email format','error');
+      swal('ALERT', 'Invalid email format', 'error');
     }
-    else if (password.length<6) {   
-      swal('ALERT','Password must be at least 6 characters long','error');
-    } 
-    else if (password!==cpassword) {
-        swal('ALERT','Password does not match','error');
-      }
+    else if (password.length < 6) {
+      swal('ALERT', 'Password must be at least 6 characters long', 'error');
+    }
+    else if (password !== cpassword) {
+      swal('ALERT', 'Password does not match', 'error');
+    }
     else {
       try {
-        const response = await fetch("http://localhost:8080/mediaone/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        });
-        if (response.ok) {
-            console.log(response)
+        const url:string = "https://localhost:8080/api/v1/user/create";
+        const res = await axios.post(url, { username, email, password });
+        console.log(res);
+        console.log(res.data.message);
+        
+     
+        const data=res.data.message;
+        console.log(data);
+          if (data=== "Success") {
+            window.location.href = "/login";
             onRegisterMode();
-        } else {
+          } else {
+            swal('ALERT', data, 'error');
           setRegistrationError("Registration failed. Please try again.");
         }
-      } catch (error) {
-        console.error("Error registering user:", error);
+      } catch (err:any) {
+        console.log("Error registering user:", err);
+        if (err.response && err.response.data && err.response.data.message) {
+            swal('ALERT', err.response.data.message, 'error');
+          } else {
+            swal('ALERT', "Error registering user. Please try again later.", 'error');
+          }
+       
+
         setRegistrationError("Error registering user. Please try again later.");
       }
     }
@@ -117,7 +132,7 @@ interface RegistrationFormProps {
           onChange={(event) => setReferers(event.target.value)}
         /></label>
         <button type="submit">Register</button>
-        <p> &nbsp; Already have an Account <Link to="/login" >Login</Link></p>
+        <p> &nbsp; Already have an Account <Link to="/login" className="text-u-none" >Login</Link></p>
       </form>
       </div>
      

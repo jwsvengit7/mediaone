@@ -1,0 +1,1 @@
+package com.example.test.Request;import lombok.AllArgsConstructor;import lombok.Builder;import lombok.Data;import lombok.NoArgsConstructor;@Data@Builder@AllArgsConstructor@NoArgsConstructorpublic class PostDTO {    private String message;    private String title;    private String content;}
