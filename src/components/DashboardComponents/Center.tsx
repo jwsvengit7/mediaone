@@ -12,7 +12,7 @@ interface getUserByID{
     password:string
 }
 interface datas {
-    sends: getUserByID[];
+    sends: getUserByID[]; 
     images:string
   } 
 
