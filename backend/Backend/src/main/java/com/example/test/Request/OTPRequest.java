@@ -1,0 +1,1 @@
+package com.example.test.Request;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;@AllArgsConstructor@NoArgsConstructor@Datapublic class OTPRequest {    private String otp;}

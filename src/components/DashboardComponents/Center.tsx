@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faBars, faCloudDownloadAlt, faHome, faImage, faMessage, faNoteSticky,  faShare, faThumbsUp, faVideo } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { faAdd, faBars, faCloudDownloadAlt, faImage, faMessage, faShare, faThumbsUp, faVideo } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import girl from '../../image/girl.jpeg';
 import jwsven7 from '../../image/jwsven7.jpeg';
 import fynie from '../../image/fynie.jpeg';
-import { Link } from "react-router-dom";
+import Reaction from "./Reaction";
 
 interface getUserByID{
     username:string,
@@ -16,10 +16,11 @@ interface datas {
     images:string
   } 
 
-  let nameofUser:string;
-  let emails:string;
+
+  //let emails:string;
 
   const Center = (props: datas)=>{
+    let [name ,setName] = useState("");
     const holed:any = props.sends;
     const stories =[
         jwsven7,
@@ -36,8 +37,8 @@ interface datas {
     }
     useEffect(() => {
       
-    nameofUser=holed.username;
-    emails=holed.email;
+      setName(holed.username);
+    //emails=holed.email;
 
         
         }, [props.sends]);
@@ -58,7 +59,7 @@ interface datas {
                             fontWeight:"bold",
                             
                             fontFamily:"sans-serif"
-                        }}>jwsven</div>
+                        }}>{name}</div>
                         </label>
                         )
                     })}
@@ -74,34 +75,14 @@ interface datas {
 
                     </div>
                 <div className=" wi-100 display justify-content" style={{marginTop:"15px"}}>
-                        <div className="row-like-comment wi-80 display justify-space-between ">
-                            <div className=" ic">                            
-                                <FontAwesomeIcon icon={faAdd} className="ccc f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Add Story</span>
-                            </div>
-                            <label htmlFor="images" className="ic">
-                                <FontAwesomeIcon icon={faImage} className="ccc f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Image</span>
-                                <input type="file" style={{display:"none"}} id="images"></input>
+                      
 
-                            </label>
-                            <label className="ic">
-                                <FontAwesomeIcon icon={faVideo} className="ccc f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Video</span>
-
-                            </label>
-                            <label htmlFor="text" className="ic">
-                                <FontAwesomeIcon icon={faNoteSticky} className="ccc f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Text</span>
-                               
-
-                            </label>
-                            <div className="ic">
-                                <FontAwesomeIcon icon={faCloudDownloadAlt} className="ccc f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Upload</span>
-
-                            </div>
-                            </div>
+                                <Reaction 
+                                classNames ="row-like-comment wi-80 display justify-space-between "
+                                text1 ="Add Story" icon ={faAdd}
+                                text2 ="Image" icon2 ={faImage}
+                                text3 ="Video" icon3 ={faVideo}
+                                text4 ="Upload" icon4 ={faCloudDownloadAlt} />
                         </div>
 
             </div>
@@ -115,7 +96,7 @@ interface datas {
                         </div>
                         <div className="wi-90  beds ">
                             <div className="wi-100  display flex-direction ">
-                            <span className="f17 white">@{nameofUser}</span>
+                            <span className="f17 white">@{name}</span>
                             <span className="f15 ccc" style={{lineHeight:"1.5"}}>Hr Manager At Decagon Hr Manager At DecagonHr Manager</span>
                             </div>
                             <div className="wi-10">
@@ -130,30 +111,14 @@ interface datas {
                             </div>
                         </div>
                         <div className=" wi-100 display justify-content" style={{marginTop:"15px"}}>
-                        <div className="row-like-comment wi-60 display justify-space-between ">
-                        <div className=" ic">
-                              
-                                <FontAwesomeIcon icon={faThumbsUp} className="blue f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Like</span>
+    
+                            <Reaction 
+                            classNames ="row-like-comment wi-60 display justify-space-between " 
+                            text1 ="Like" icon ={faThumbsUp} 
+                            text2 ="Comment" icon2 ={faMessage} 
+                            text3 ="Comment" icon3 ={faShare} 
+                            text4 ="Upload" icon4 ={faCloudDownloadAlt}  />
                             
-
-                            </div>
-                            <div className="ic">
-                                <FontAwesomeIcon icon={faMessage} className="blue f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Comment</span>
-
-                            </div>
-                            <div className="ic">
-                                <FontAwesomeIcon icon={faShare} className="blue f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Share</span>
-
-                            </div>
-                            <div className="ic">
-                                <FontAwesomeIcon icon={faCloudDownloadAlt} className="blue f15" />
-                                <span className="ccc ">&nbsp;&nbsp;Upload</span>
-
-                            </div>
-                            </div>
                         </div>
 
                     </div>

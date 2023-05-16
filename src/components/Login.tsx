@@ -6,24 +6,18 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope,faLock} from '@fortawesome/free-solid-svg-icons';
 import './css/style.css';
 import swal from 'sweetalert';
-import https from 'https';
 
-
-
-interface RegistrationFormProps {
-    onRegisterMode: () => void;
-  }
-
-  const Login: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
+  const Login = () => {
     const navigate = useNavigate();
     useEffect(()=>{
     if(localStorage.getItem("token")){
-        navigate("/dashboard")
+        window.location.href="/dashboard";
     }
 },[])
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registrationError, setRegistrationError] = useState("");
+  const [count,setCount] = useState(0)
 
 
   const handleFormSubmit = async (event: React.FormEvent) => {
@@ -34,28 +28,25 @@ interface RegistrationFormProps {
   
     else {
       try {
-        const agent = new https.Agent({
-          rejectUnauthorized: false
-        });
         
         const config = {
-          httpsAgent: agent,
+          type:"POST",
           headers: {
             "Content-Type": "application/json",
           }
         };
-        const url:string="https://localhost:8080/api/v1/user/authenticate";
+        const url:string="http://localhost:8080/api/v1/user/authenticate";
         const res = await axios.post(url,{ email, password },config
           );
         console.log(res)  
-        const data:string=res.data.message
+        const data:string=res.data
         const sessionID:string=res.data.data
             console.log(data)
             if (data==="Success") {
-              let x=0;
+              setCount((count) => count + 1);
               setInterval(()=>{
-                x++;
-                if(x===2){
+              
+                if(count===2){
                   swal('ALERT',data, 'success');
                   console.log(data)
                  

@@ -181,3 +181,12 @@ aside li {
     display: flex;
     justify-content: center;
 }
+
+@media(max-width:900px){
+    .coumn1{
+        display:none
+    }
+    .column2{
+        width:90%
+    }
+}

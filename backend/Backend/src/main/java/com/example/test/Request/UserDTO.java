@@ -1,0 +1,1 @@
+package com.example.test.Request;import com.example.test.Enums.Role;import lombok.AllArgsConstructor;import lombok.Data;import lombok.NoArgsConstructor;@AllArgsConstructor@NoArgsConstructor@Datapublic class UserDTO {    private String email;    private String username;    private String password;    private boolean activate;    private Role role;}

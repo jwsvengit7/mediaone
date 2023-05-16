@@ -5,20 +5,20 @@ import Center from './DashboardComponents/Center';
 import Left from './DashboardComponents/Left';
 import Right from './DashboardComponents/Right';
 import axios from "axios";
-import   image from '../image/jwsven.jpeg';
+import image from '../image/jwsven.jpeg';
 
 const Dashboard: React.FC = (): JSX.Element  => {
     const [data, setData] = useState([]);
   
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        window.location.replace("/login")
-    }
+   // const token = localStorage.getItem("token");
+    // if (!token) {
+    //     window.location.replace("/login")
+    // }
   }, []);
   const id: string | null = localStorage.getItem("token");
   const url:string = "http://localhost:8080/mediaone/get/";
-    const fetch = axios.get(url+id)
+    axios.get(url+id)
     .then(response => {
         setData(response.data.data);
       })

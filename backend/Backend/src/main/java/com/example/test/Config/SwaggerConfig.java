@@ -70,4 +70,5 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/v1/post/**").build();
     }
 
+
 }

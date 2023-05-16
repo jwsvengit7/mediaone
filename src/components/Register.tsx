@@ -7,12 +7,9 @@ import { faUser, faEnvelope, faLock, faLockOpen, faUserAlt } from '@fortawesome/
 import './css/style.css';
 import swal from 'sweetalert';
 
-interface RegistrationFormProps {
-  onRegisterMode: () => void,
- 
-}
 
-const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
+
+const Register = () => {
     const navigate = useNavigate(); 
     useEffect(()=>{
         if(localStorage.getItem("token")){
@@ -25,6 +22,7 @@ const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
   const [cpassword, setcPassword] = useState("");
   const [referer, setReferers] = useState("");
   const [registrationError, setRegistrationError] = useState("");
+  const [count,setCount] =  useState(0)
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -42,21 +40,27 @@ const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
     }
     else {
       try {
-        const url:string = "https://localhost:8080/api/v1/user/create";
-        const res = await axios.post(url, { username, email, password });
-        console.log(res);
-        console.log(res.data.message);
-        
-     
-        const data=res.data.message;
-        console.log(data);
-          if (data=== "Success") {
-            window.location.href = "/login";
-            onRegisterMode();
-          } else {
-            swal('ALERT', data, 'error');
-          setRegistrationError("Registration failed. Please try again.");
+        const url:string = "http://localhost:8080/api/v1/user/create";
+       await axios.post(url, { username, email, password })
+    
+        .then((data)=>{
+        const result=data.data;
+        console.log(result);
+          if (result.message=== "SUCCESS") {
+            setInterval(()=>{
+            setCount(count + 1)
+            localStorage.setItem("KEY",data.data.accessToken)
+            if(count===3){
+            window.location.href = "/user/entryPoint";
+            }
+          },1000)
         }
+       else {
+        swal('ALERT', result.message, 'error');
+      setRegistrationError("Registration failed. Please try again.");
+    }
+        })
+        
       } catch (err:any) {
         console.log("Error registering user:", err);
         if (err.response && err.response.data && err.response.data.message) {
@@ -72,7 +76,7 @@ const Register: React.FC<RegistrationFormProps> = ({ onRegisterMode }) => {
   };
   return (
     <div className="app_register display wi-100 align-items justify-content">
-        <div className="wi-50 colum1">
+        <div className="wi-40 colum1">
         </div>
         <div className="wi-40 colum2 display flex-direction align-items justify-content ">
       <h1 className="blue"><span style={{fontFamily:"monospace"}}>Media</span><span style={{fontFamily:"fantasy"}}>*xOne</span></h1>
