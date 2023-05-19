@@ -1,22 +1,16 @@
 package com.example.test.Controllers;
 
-import com.example.test.Exceptions.EmailAddressAlreadyExistException;
-import com.example.test.Request.OTPRequest;
 import com.example.test.Request.RegisterRequest;
-import com.example.test.Request.UserDTO;
 import com.example.test.Request.UserRequest;
 import com.example.test.Response.Response;
 import com.example.test.ServiceImpl.EmailSenderImplementation;
 import com.example.test.ServiceImpl.UserServiceImplentation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -31,18 +25,11 @@ public class UserController {
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<?> register(HttpSession session, @RequestBody RegisterRequest request) {
-
-        try {
-            UserDTO signup = service.register(request);
-            emailSenderImplementation.sendEmail(request.getEmail(),session);
-            log.info("OTP{}",session);
-            return ResponseEntity.ok(signup);
-        } catch (EmailAddressAlreadyExistException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email Already Exists");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
-        }
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+            Response signup = service.register(request);
+            return ResponseEntity.ok().body(
+                    signup
+            );
 
          //tizeti.com
 
@@ -61,10 +48,10 @@ public class UserController {
         service.refreshToken(request, response);
     }
 
-    @PostMapping("/otp")
+    @PostMapping("/token/{token}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Response> generateOtp(HttpSession session, @RequestBody OTPRequest otpAuthentication) {
-        Object details = emailSenderImplementation.otpVerication(session,otpAuthentication.getOtp());
+    public ResponseEntity<Response> generateOtp(@PathVariable String token) {
+        Object details = emailSenderImplementation.otpVerication(token);
         if(details.equals("Success")) {
             return ResponseEntity.ok().body(
                     Response.builder()
