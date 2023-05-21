@@ -1,9 +1,9 @@
 import { useEffect,useState } from "react";
 import './css/style.css';
 import './css/jwsvenStyle.css';
-import Center from './DashboardComponents/Center';
-import Left from './DashboardComponents/Left';
-import Right from './DashboardComponents/Right';
+import Center from './order_component/Center';
+import Left from './order_component/Left';
+import Right from './order_component/Right';
 import axios from "axios";
 import image from '../image/jwsven.jpeg';
 

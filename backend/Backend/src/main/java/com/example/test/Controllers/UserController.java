@@ -7,6 +7,7 @@ import com.example.test.Response.APIResponse;
 import com.example.test.Response.Response;
 import com.example.test.ServiceImpl.ConfirmationService;
 import com.example.test.ServiceImpl.EmailSenderImplementation;
+import com.example.test.ServiceImpl.TokenServiceImpl;
 import com.example.test.ServiceImpl.UserServiceImplentation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +27,7 @@ import java.io.IOException;
 public class UserController {
     private final UserServiceImplentation service;
     private final ConfirmationService confirmationService;
+    private final TokenServiceImpl tokenService;
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")
@@ -46,7 +48,7 @@ public class UserController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
-        service.refreshToken(request, response);
+        tokenService.refreshToken(request, response);
     }
 
     @GetMapping("/token/{token}")

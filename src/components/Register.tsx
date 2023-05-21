@@ -44,9 +44,10 @@ const Register = () => {
         setLoading(false);
 
         const result = response.data;
+        const message = result.data.message;
         console.log(result)
-        console.log(result.data.message)
-        if (result.message === "SUCCESS") {
+        console.log(message)
+        if (message === "SUCCESS") {
           swal('SUCCESS', 'Registration successful', 'success');
           setRegistrationError("")
         } else {

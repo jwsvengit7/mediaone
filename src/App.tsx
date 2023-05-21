@@ -13,7 +13,7 @@ function App()  {
         <Route  path="/register" element ={<Register />} />
         <Route  path="/login" element ={<Login /> } />
         <Route path="/dashboard" element={ <Dashboard />} />
-        <Route path="/user/verify/:token" element={<OTP />} />
+        <Route path="/user/verify/token/:token" element={<OTP />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>

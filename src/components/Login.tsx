@@ -38,19 +38,20 @@ import SideImage from "./SideImage";
         const url:string="http://localhost:8080/api/v1/user/authenticate";
         const res = await axios.post(url,{ email, password },config
           );
-        console.log(res)  
-        const data:string=res.data
-        const sessionID:string=res.data.data
-            console.log(data)
-            if (data==="Success") {
+   
+        const data=res.data
+        const access_token:string=data.data.access_token
+        const message:string=data.data.message
+            console.log(message)
+            if (message==="SUCCESS") {
               setCount((count) => count + 1);
               setInterval(()=>{
               
                 if(count===2){
-                  swal('ALERT',data, 'success');
+                  swal('ALERT',message, 'success');
                   console.log(data)
                  
-                 localStorage.setItem("token",sessionID);
+                 localStorage.setItem("token",access_token);
                
                       window.location.href="/dashboard";
                 }
