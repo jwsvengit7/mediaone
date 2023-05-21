@@ -1,1 +1,1 @@
-package com.example.test.Services;import com.example.test.Response.Response;import jakarta.servlet.http.HttpSession;import org.springframework.security.core.userdetails.UserDetails;public interface EmailSender {    Object otpVerication(String OTP_REQUEST);}
+package com.example.test.Services;public interface EmailSender {    void sendEmail(String link,String email);}

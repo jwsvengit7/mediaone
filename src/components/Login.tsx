@@ -1,4 +1,4 @@
-import {Link,useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import React, { useState,useEffect } from "react";
 import axios from 'axios';
 import './css/jwsvenStyle.css';
@@ -6,9 +6,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope,faLock} from '@fortawesome/free-solid-svg-icons';
 import './css/style.css';
 import swal from 'sweetalert';
+import SideImage from "./SideImage";
 
   const Login = () => {
-    const navigate = useNavigate();
+   
     useEffect(()=>{
     if(localStorage.getItem("token")){
         window.location.href="/dashboard";
@@ -17,8 +18,7 @@ import swal from 'sweetalert';
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registrationError, setRegistrationError] = useState("");
-  const [count,setCount] = useState(0)
-
+  const [count,setCount] = useState(0);
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();      
@@ -73,9 +73,8 @@ import swal from 'sweetalert';
   };
   return (
     <div className="app_register display wi-100 align-items justify-content">
-        <div className="wi-50 colum1">
-        </div>
-        <div className="wi-40 colum2 display flex-direction align-items justify-content ">
+        <SideImage />
+        <div className="wi-45 colum2 display flex-direction align-items justify-content ">
       <h1 className="blue"><span style={{fontFamily:"monospace"}}>Media</span><span style={{fontFamily:"fantasy"}}>*xOne</span></h1>
       {registrationError && <p>{registrationError}</p>}
       <div className="rowForm ">

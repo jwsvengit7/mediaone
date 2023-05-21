@@ -16,17 +16,14 @@ import java.util.Collections;
 @Configuration
 
 public class SwaggerConfig {
-
     @Value("v1")
     private String version;
-
     @Bean
     public OpenAPI api(){
         SecurityScheme securityScheme  = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
                 .bearerFormat("JWT");
-
 
         return new OpenAPI()
                 .components(new Components()
